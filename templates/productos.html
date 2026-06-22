@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Productos - FarmaControl</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "error-container": "#ffdad6", "outline": "#6c7a71", "surface-container-low": "#eff4ff",
+                "secondary-fixed": "#e1e0ff", "surface-container-lowest": "#ffffff", "on-surface-variant": "#3c4a42",
+                "error": "#ba1a1a", "on-secondary-container": "#fffbff", "surface-tint": "#006c49",
+                "inverse-surface": "#213145", "primary-fixed": "#6ffbbe", "on-primary-fixed-variant": "#005236",
+                "primary": "#006c49", "on-primary-container": "#00422b", "primary-container": "#10b981",
+                "surface-bright": "#f8f9ff", "secondary": "#4648d4", "tertiary-fixed-dim": "#bdcac1",
+                "on-secondary-fixed-variant": "#2f2ebe", "on-surface": "#0b1c30", "on-tertiary-container": "#303c36",
+                "surface-variant": "#d3e4fe", "inverse-primary": "#4edea3", "surface-container-high": "#dce9ff",
+                "outline-variant": "#bbcabf", "tertiary": "#55615a", "on-tertiary": "#ffffff",
+                "tertiary-fixed": "#d9e6dd", "on-tertiary-fixed-variant": "#3e4943", "inverse-on-surface": "#eaf1ff",
+                "secondary-fixed-dim": "#c0c1ff", "on-tertiary-fixed": "#131e19", "on-primary-fixed": "#002113",
+                "on-background": "#0b1c30", "surface": "#f8f9ff", "primary-fixed-dim": "#4edea3",
+                "background": "#f8f9ff", "on-primary": "#ffffff", "surface-dim": "#cbdbf5",
+                "on-error-container": "#93000a", "on-secondary-fixed": "#07006c", "surface-container": "#e5eeff",
+                "secondary-container": "#6063ee", "tertiary-container": "#99a69e", "on-secondary": "#ffffff",
+                "surface-container-highest": "#d3e4fe", "on-error": "#ffffff"
+        },
+        "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+        "spacing": { "lg": "2rem", "container-max": "1440px", "md": "1.5rem", "sm": "1rem", "xs": "0.5rem", "gutter": "24px", "xl": "3rem", "base": "4px" },
+        "fontFamily": {
+                "body-lg": ["Inter"], "button": ["Inter"], "label-md": ["JetBrains Mono"], "headline-lg": ["Manrope"],
+                "body-md": ["Inter"], "display-lg": ["Manrope"], "body-sm": ["Inter"], "headline-lg-mobile": ["Manrope"], "headline-md": ["Manrope"]
+        },
+        "fontSize": {
+                "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                "button": ["14px", { "lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                "label-md": ["13px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                "headline-lg": ["32px", { "lineHeight": "1.25", "fontWeight": "700" }],
+                "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                "display-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                "headline-lg-mobile": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }]
+        }
+},
+    },
+  }
+</script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-2 bg-surface/90 backdrop-blur-md border-b border-outline-variant shadow-sm docked full-width top-0">
+<div class="flex items-center gap-gutter">
+<div class="font-headline-lg text-headline-lg font-bold text-primary tracking-tight">FarmaControl</div>
+<div class="hidden md:flex items-center gap-sm">
+<a class="text-primary border-b-2 border-primary pb-1 font-bold active:scale-95 transition-transform duration-150 hover:bg-surface-container-high transition-colors font-label-md text-label-md px-2 py-1 rounded-t" href="/productos">Productos</a>
+<a class="text-on-surface-variant active:scale-95 transition-transform duration-150 hover:bg-surface-container-high transition-colors font-label-md text-label-md px-2 py-1 rounded" href="/ventas">Ventas</a>
+<a class="text-on-surface-variant active:scale-95 transition-transform duration-150 hover:bg-surface-container-high transition-colors font-label-md text-label-md px-2 py-1 rounded" href="/reportes">Reportes</a>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-2 rounded-lg font-label-md text-label-md active:scale-95 transition-transform duration-150" onclick="window.location='/logout'">
+<span class="material-symbols-outlined">logout</span>
+                Salir
+            </button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant shadow-sm">
+<img alt="Usuario" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk5WO5aKufYu6dUm95ZMo0dinz6rZJHLPL_QV5MbO92iEZR5aC0OIoGucFzwTwYqU70sZLlDFUbcaq1DsAYXg9VPiSecY8QAa_zNznVrU9j5F-IjCIb6ktc4fzYxmxHWh3mt15DzFz1HUyiInvtFQ-KgPgWbJ-AlC4k9cnbdFel4UTlZ8A0D9_KZWfD5_GNlyixY2RxOHrwe8fdrITs123yxeMl7zO6OXI8BooB50iDyAjizpttzEn1mptyvAgJxIXI1V-6yM7IcU"/>
+</div>
+</div>
+</nav>
+<main class="flex-grow pt-[88px] pb-xl px-gutter max-w-container-max mx-auto w-full">
+<header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-xl gap-md">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface">Gestión de Productos</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Administra el inventario y stock de medicamentos.</p>
+</div>
+<button class="bg-primary text-on-primary font-button text-button px-5 py-3 rounded-lg flex items-center gap-2 hover:bg-[#005c3e] transition-all active:scale-[0.98] shadow-md hover:shadow-lg" onclick="document.getElementById('product-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Nuevo Producto
+            </button>
+</header>
+<div class="bg-surface border border-outline-variant rounded-xl p-md mb-md shadow-sm flex flex-col md:flex-row gap-md">
+<div class="relative flex-grow">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 font-body-md text-body-md transition-all shadow-sm" placeholder="Buscar por nombre, ID o laboratorio... (visual, aún sin lógica)" type="text" disabled/>
+</div>
+</div>
+<div class="bg-surface rounded-xl border border-outline-variant shadow-lg overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="bg-surface-container/50 backdrop-blur-sm border-b border-outline-variant font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+<th class="px-6 py-4 font-semibold w-24">ID</th>
+<th class="px-6 py-4 font-semibold">Nombre</th>
+<th class="px-6 py-4 font-semibold">Laboratorio</th>
+<th class="px-6 py-4 font-semibold">Categoría</th>
+<th class="px-6 py-4 font-semibold text-right">Precio</th>
+<th class="px-6 py-4 font-semibold text-right">Stock</th>
+<th class="px-6 py-4 font-semibold text-center">Estado</th>
+<th class="px-6 py-4 font-semibold text-center w-24">Acciones</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant/50">
+{% for p in productos %}
+<tr class="hover:bg-surface-container-low/80 transition-colors duration-200 group">
+<td class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">#P-{{ '%03d'|format(p.id_producto) }}</td>
+<td class="px-6 py-4 font-semibold">{{ p.nombre }}</td>
+<td class="px-6 py-4 text-on-surface-variant">{{ p.laboratorio }}</td>
+<td class="px-6 py-4 text-on-surface-variant">{{ p.categoria }}</td>
+<td class="px-6 py-4 font-label-md text-label-md text-right">{{ p.precio|cop }}</td>
+<td class="px-6 py-4 font-label-md text-label-md text-right {% if p.estado_stock == 'BAJO' %}text-error font-semibold{% endif %}">{{ p.stock }}</td>
+<td class="px-6 py-4 text-center">
+{% if p.estado_stock == 'BAJO' %}
+<span class="inline-flex items-center px-3 py-1 rounded-full font-label-md text-label-md bg-rose-100 text-rose-800 border border-rose-200">BAJO</span>
+{% else %}
+<span class="inline-flex items-center px-3 py-1 rounded-full font-label-md text-label-md bg-emerald-100 text-emerald-800 border border-emerald-200">OK</span>
+{% endif %}
+</td>
+<td class="px-6 py-4 text-center">
+<a href="/productos/eliminar/{{ p.id_producto }}" class="text-on-surface-variant hover:text-error hover:bg-error-container transition-all p-1.5 rounded-lg inline-flex" onclick="return confirm('¿Seguro que desea eliminar este producto?');">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</a>
+</td>
+</tr>
+{% else %}
+<tr><td colspan="8" class="px-6 py-8 text-center text-on-surface-variant">No hay productos registrados todavía.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-outline-variant bg-surface-container-lowest flex justify-between items-center text-body-sm text-on-surface-variant">
+<span>Mostrando {{ productos|length }} producto(s)</span>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-outline-variant rounded-lg bg-surface font-button text-button shadow-sm opacity-50 cursor-not-allowed" disabled>Anterior</button>
+<button class="px-4 py-2 border border-outline-variant rounded-lg bg-surface font-button text-button shadow-sm opacity-50 cursor-not-allowed" disabled>Siguiente</button>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed inset-0 z-[100] hidden" id="product-modal">
+<div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm transition-opacity" onclick="document.getElementById('product-modal').classList.add('hidden')"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] bg-surface rounded-xl shadow-2xl border border-outline-variant flex flex-col max-h-[90vh]">
+<div class="flex justify-between items-center px-6 py-5 border-b border-outline-variant bg-surface-container/30">
+<h2 class="font-headline-md text-headline-md text-on-surface">Añadir Nuevo Producto</h2>
+<button class="text-on-surface-variant hover:text-on-surface bg-surface-container-low hover:bg-surface-container p-1.5 rounded-lg transition-colors" onclick="document.getElementById('product-modal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-6 overflow-y-auto">
+<form id="form-nuevo-producto" action="/productos/nuevo" class="flex flex-col gap-5" method="POST">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="nombre">Nombre del Producto *</label>
+<input class="w-full px-3 py-2.5 border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 font-body-md text-body-md transition-all shadow-sm" id="nombre" name="nombre" required type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="laboratorio">Laboratorio *</label>
+<input class="w-full px-3 py-2.5 border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 font-body-md text-body-md transition-all shadow-sm" id="laboratorio" name="laboratorio" required type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="categoria">Categoría *</label>
+<select class="w-full px-3 py-2.5 border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 font-body-md text-body-md transition-all shadow-sm" id="categoria" name="categoria" required>
+<option value="">Seleccionar categoría</option>
+<option value="Analgésico">Analgésicos</option>
+<option value="Antibiótico">Antibióticos</option>
+<option value="Antiinflamatorio">Antiinflamatorios</option>
+<option value="Vitaminas">Vitaminas</option>
+<option value="Gastrointestinal">Gastrointestinal</option>
+<option value="Antialérgico">Antialérgicos</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="precio">Precio (COP) *</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-label-md">$</span>
+<input class="w-full pl-7 pr-3 py-2.5 border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 font-label-md text-label-md transition-all shadow-sm" id="precio" name="precio" required step="0.01" type="number"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="stock">Stock Inicial *</label>
+<input class="w-full px-3 py-2.5 border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 font-label-md text-label-md transition-all shadow-sm" id="stock" name="stock" required type="number"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="stock_minimo">Stock Mínimo *</label>
+<input class="w-full px-3 py-2.5 border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 font-label-md text-label-md transition-all shadow-sm" id="stock_minimo" name="stock_minimo" required type="number" value="5"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="fecha_vencimiento">Vencimiento</label>
+<input class="w-full px-3 py-2.5 border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 font-body-md text-body-md transition-all text-on-surface-variant shadow-sm" id="fecha_vencimiento" name="fecha_vencimiento" type="date"/>
+</div>
+</div>
+<div class="mt-2 flex items-center gap-3 p-3 bg-surface-container-low rounded-lg border border-outline-variant/50">
+<input class="w-4 h-4 text-primary bg-surface border-outline-variant rounded focus:ring-primary focus:ring-2" id="requiere_receta" name="requiere_receta" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer select-none" for="requiere_receta">Requiere receta médica</label>
+</div>
+</form>
+</div>
+<div class="px-6 py-5 border-t border-outline-variant bg-surface-container-lowest flex justify-end gap-3 rounded-b-xl">
+<button class="px-5 py-2.5 bg-surface text-on-surface border border-outline-variant rounded-lg font-button text-button hover:bg-surface-container-low transition-colors active:scale-98 shadow-sm" onclick="document.getElementById('product-modal').classList.add('hidden')" type="button">
+                    Cancelar
+                </button>
+<button class="px-5 py-2.5 bg-primary text-on-primary rounded-lg font-button text-button hover:bg-[#005c3e] transition-all active:scale-98 shadow-md hover:shadow-lg" type="submit" form="form-nuevo-producto">
+                    Guardar Producto
+                </button>
+</div>
+</div>
+</div>
+</body></html>
