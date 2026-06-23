@@ -93,10 +93,11 @@ def reportes():
                            productos=producto_controller.obtener_productos(),
                            resumen=producto_controller.obtener_resumen())
 
-
 @app.route('/reportes/pdf')
 def reporte_pdf():
-    ruta = generar_reporte_inventario(producto_controller.obtener_productos())
+    productos = producto_controller.obtener_productos()
+    resumen = producto_controller.obtener_resumen()
+    ruta = generar_reporte_inventario(productos, resumen)
     return send_file(ruta, as_attachment=True)
 
 
